@@ -1,4 +1,4 @@
-name: Veracode Scan Workflow
+name: Veracode Scheduled Static Scan
 
 on:
   schedule:
