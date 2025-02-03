@@ -7,7 +7,7 @@ on:
     branches:
       - "*"
   pull_request:
-    branches:
+      branches:
       - "*"
   workflow_dispatch:
 
@@ -39,7 +39,7 @@ jobs:
           unzip -l last_modified_files.zip
 
       - name: Upload zip file
-        uses: actions/upload-artifact@v4  # Updated version
+        uses: actions/upload-artifact@v4
         with:
           name: last_modified_files.zip
           path: last_modified_files.zip
@@ -56,19 +56,20 @@ jobs:
           token: ${{ secrets.MYGITHUB_TOKEN }}
 
       - name: Get archive
-        uses: actions/download-artifact@v4  # Updated version
+        uses: actions/download-artifact@v4
         with:
           name: last_modified_files.zip
 
       - name: Pipeline-scan action step
         id: pipeline-scan
-        uses: veracode/Veracode-pipeline-scan-action@pipeline-scan-beta-v0.0.4
+        uses: veracode/Veracode-pipeline-scan-action@v1.0.18
         with:
           vid: ${{ secrets.API_ID }}
           vkey: ${{ secrets.API_KEY }}
           file: "last_modified_files.zip"
           fail_build: false
           fail_on_severity: 'high'
+          upload_artifact: false # **Disabling Veracode's auto-upload if supported**
 
       - name: Check for filtered results
         id: check_filtered_results
@@ -81,11 +82,11 @@ jobs:
             echo "exists=false" >> $GITHUB_ENV
           fi
 
-      - name: Upload filtered results
+      - name: Manually Upload Scan Results
         if: env.exists == 'true'
-        uses: actions/upload-artifact@v4  # Updated version
+        uses: actions/upload-artifact@v4
         with:
-          name: Veracode_Pipeline-Scan_Results  # Fixed: No spaces
+          name: veracode-pipeline-scan-results
           path: filtered_results.json
 
   veracode_upload_and_scan:
@@ -107,7 +108,7 @@ jobs:
           unzip -l repo.zip
 
       - name: Upload zip file
-        uses: actions/upload-artifact@v4  # Updated version
+        uses: actions/upload-artifact@v4
         with:
           name: repo.zip
           path: repo.zip
@@ -117,7 +118,7 @@ jobs:
           rm -f repo.zip
 
       - name: Get archive
-        uses: actions/download-artifact@v4  # Updated version
+        uses: actions/download-artifact@v4
         with:
           name: repo.zip
           path: repo.zip
@@ -132,8 +133,6 @@ jobs:
           vid: ${{ secrets.API_ID }}
           vkey: ${{ secrets.API_KEY }}
           criticality: 'Low'
-          # createsandbox: true
-          # sandboxname: ${{ github.event.repository.name }} - Sandbox
 
   import_issues:
     if: github.ref != 'refs/heads/main'
@@ -149,9 +148,9 @@ jobs:
 
       - name: Get scan results
         if: env.exists == 'true'
-        uses: actions/download-artifact@v4  # Updated version
+        uses: actions/download-artifact@v4
         with:
-          name: Veracode_Pipeline-Scan_Results  # Fixed: No spaces
+          name: veracode-pipeline-scan-results
 
       - name: Veracode scan results to GitHub issues Action
         if: env.exists == 'true'
