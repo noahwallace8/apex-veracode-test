@@ -39,7 +39,7 @@ jobs:
           unzip -l last_modified_files.zip
 
       - name: Upload zip file
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: last_modified_files.zip
           path: last_modified_files.zip
@@ -51,12 +51,12 @@ jobs:
     name: Pipeline Scan
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           token: ${{ secrets.MYGITHUB_TOKEN }}
 
       - name: Get archive
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: last_modified_files.zip
 
@@ -83,7 +83,7 @@ jobs:
 
       - name: Upload filtered results
         if: env.exists == 'true'
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: filtered-results
           path: filtered_results.json
@@ -94,7 +94,7 @@ jobs:
     needs: build
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           token: ${{ secrets.MYGITHUB_TOKEN }}
 
@@ -107,7 +107,7 @@ jobs:
           unzip -l repo.zip
 
       - name: Upload zip file
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: repo.zip
           path: repo.zip
@@ -117,7 +117,7 @@ jobs:
           rm -f repo.zip
 
       - name: Get archive
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: repo.zip
           path: repo.zip
