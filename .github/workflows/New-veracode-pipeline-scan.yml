@@ -62,3 +62,4 @@ jobs:
           vkey: ${{ secrets.API_KEY }}  # Veracode API credentials (Key)
           criticality: 'Low'  # Sets the application's criticality level in Veracode
           team: "Your-Veracode-Team-Name"  # Replace with the actual Veracode team name for better access control
+          create_code_scanning_alert: true  # Enables GitHub Code Scanning alerts for Veracode findings
