@@ -41,26 +41,6 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v3  # Checks out the repository for scan execution
 
-      - name: Check if a Veracode scan is already running
-        id: check_scan
-        run: |
-          response=$(curl -s -u "${{ secrets.API_ID }}:${{ secrets.API_KEY }}" \
-            -H "Accept: application/json" \
-            "https://analysiscenter.veracode.com/api/5.0/getbuildlist.do?app_id=YOUR_APP_ID")
-          
-          echo "Veracode API Response:"
-          echo "$response"
-
-          # Check if any scan is currently in progress
-          scan_status=$(echo "$response" | grep -o "Scan In Process")
-
-          if [ -n "$scan_status" ]; then
-            echo "A Veracode scan is currently running. Exiting..."
-            exit 1
-          else
-            echo "No active Veracode scans found. Proceeding with the scan."
-          fi
-
       - name: Remove existing repo.zip
         run: |
           rm -f repo.zip  # Ensures any previous ZIP files are removed before downloading the new one
