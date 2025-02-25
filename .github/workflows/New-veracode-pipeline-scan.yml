@@ -1,4 +1,4 @@
-name: Veracode Scheduled Static Scan  # Name of the GitHub Actions workflow
+name: Veracode Scheduled Static Scan  # Name of the GitHub Actions workflow.
 
 on:
   schedule:
