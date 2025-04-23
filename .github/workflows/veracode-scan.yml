@@ -37,8 +37,8 @@ jobs:
           appname:              ${{ github.event.repository.name }}
           filepath:             repo.zip
           version:              ${{ github.run_id }}
-          vid:                  ${{ secrets.VERACODE_API_ID }}
-          vkey:                 ${{ secrets.VERACODE_API_KEY }}
+          vid:                  ${{ secrets.API_ID }}
+          vkey:                 ${{ secrets.API_KEY }}
           criticality:         'Low'      # Set the criticality of the scan
           scantimeout:          120       # wait up to 2 hours
           scanpollinginterval:  60        # poll every 60 s
