@@ -34,12 +34,12 @@ jobs:
       - name: Veracode Upload And Scan
         uses: veracode/veracode-uploadandscan-action@0.2.6
         with:
-          appname:            ${{ github.event.repository.name }}
-          filepath:           repo.zip
-          version:            ${{ github.run_id }}
-          vid:                ${{ secrets.VERACODE_API_ID }}
-          vkey:               ${{ secrets.VERACODE_API_KEY }}
-          criticality: 'Low'            # Set the criticality of the scan
-          scantimeout:        120       # wait up to 2 hours
-          scanpollinginterval:60        # poll every 60 s
-          deleteincompletescan: false   # do not delete; just wait
+          appname:              ${{ github.event.repository.name }}
+          filepath:             repo.zip
+          version:              ${{ github.run_id }}
+          vid:                  ${{ secrets.VERACODE_API_ID }}
+          vkey:                 ${{ secrets.VERACODE_API_KEY }}
+          criticality:         'Low'      # Set the criticality of the scan
+          scantimeout:          120       # wait up to 2 hours
+          scanpollinginterval:  60        # poll every 60 s
+          deleteincompletescan: false     # do not delete; just wait
